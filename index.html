@@ -216,5 +216,10 @@ const engine = new Engine(GODOT_CONFIG);
 }());
 		</script>
 	</body>
+	document.getElementById("romInput").addEventListener("change", async (e) => {
+const file = e.target.files[0];
+const data = new Uint8Array(await file.arrayBuffer());
+FS.writeFile("/baserom.sfc", data);
+});
 </html>
 
