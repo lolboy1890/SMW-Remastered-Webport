@@ -3,7 +3,30 @@ var Godot = (() => {
   var _scriptName = typeof document != 'undefined' ? document.currentScript?.src : undefined;
   
   return (
-function(moduleArg = {}) {
+const dropzone = document.getElementById("dropzone");
+
+dropzone.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  dropzone.style.borderColor = "#4CAF50";
+});
+
+dropzone.addEventListener("dragleave", () => {
+  dropzone.style.borderColor = "#888";
+});
+
+dropzone.addEventListener("drop", async (e) => {
+  e.preventDefault();
+  dropzone.style.borderColor = "#888";
+
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+
+  const arrayBuffer = await file.arrayBuffer();
+
+  // Pass the ROM to the game’s loader
+  loadROM(arrayBuffer);
+});
+	  function(moduleArg = {}) {
   var moduleRtn;
 document.getElementById("romfile").addEventListener("change", async (e) => {
     const file = e.target.files[0];
